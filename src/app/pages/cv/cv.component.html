@@ -1,0 +1,58 @@
+<div class="page">
+
+    <div class="header">
+        <div>
+            <h2>CV list</h2>
+        </div>
+        <div>
+            <p-button label="Add CV Details" (click)="redirectToDetails()" />
+        </div>
+    </div>
+
+    <div class="body">
+
+        <p-table [columns]="header" [value]="getCVList" styleClass="p-datatable-gridlines" scrollHeight="85vh"
+            [tableStyle]="{ 'min-width': '50rem' }">
+            <ng-template pTemplate="header" let-columns>
+                <tr>
+                    @for(col of columns; track col; let i = $index) {
+                    <th>{{col.colum}}</th>
+                    }
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="columns">
+                <tr>
+                    @for(col of columns; track col; let i = $index) {
+                    @if(col.field === 'no') {
+                    <td>{{i + 1}}</td>
+                    }
+                    @if(col.field != 'no' && col.field != 'action') {
+                    <td>{{ rowData[col.field] }}</td>
+                    }
+                    @if(col.field === 'action') {
+                    <td>
+                        <div class="col-1 d-flex flex-row align-items-center">
+                            <i class="pi pi-pencil" style="font-size: 1.5rem;"  (click)="redirectToDetails('edit', rowData)"></i>
+                            <i class="pi pi-trash ml-1r" style="font-size: 1.5rem;"
+                                (click)="deleteObj(rowData.cvID)"></i>
+                            <i class="pi pi-eye ml-1r" style="font-size: 1.5rem;" (click)="exportPDF(rowData, false)"></i>
+                            <i class="pi pi-file-pdf ml-1r" style="font-size: 1.5rem;"
+                                (click)="exportPDF(rowData)"></i>
+                        </div>
+                    </td>
+                    }
+                    }
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+
+
+<p-dialog header="PDF Preview" [(visible)]="displayModal" [modal]="true" [style]="{width: '90%', height: '90%'}">
+    <ng-container *ngIf="pdfSrc">
+        <iframe [src]="pdfSrc" width="100%" height="100%"></iframe>
+    </ng-container>
+</p-dialog>
+
+<p-toast />

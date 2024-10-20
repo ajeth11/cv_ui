@@ -1,0 +1,303 @@
+<div class="page">
+
+    <div class="header">
+        <div>
+            <h2>CV {{mode === 'edit' ? 'Edit' : 'Add'}}</h2>
+        </div>
+    </div>
+
+    <div class="body">
+        <div [formGroup]="cvFrom">
+            <p-card class="shadow-none">
+                <p-scrollPanel [style]="{ width: '100%', height: '60vh' }">
+                    <div class="row mb-2r">
+                        <div class="col-2 d-flex flex-column">
+                            <label for="name">Name <span>*</span></label>
+                            <input pInputText id="name" aria-describedby="name-help" formControlName="name" />
+                            @if(formControls['name'].touched && formControls['name'].errors) {
+                            @if(formControls['name']['errors']['required']) {
+                            <span class="error">
+                                * Enter your name.
+                            </span>
+                            }
+                            @if(formControls['name']['errors']['minLength']) {
+                            <span class="error">
+                                * Name length min 3.
+                            </span>
+                            }
+                            }
+                        </div>
+
+                        <div class="col-2 d-flex flex-column">
+                            <label for="email">Email <span>*</span></label>
+                            <input pInputText id="email" aria-describedby="email-help" formControlName="email" />
+                            @if(formControls['email'].touched && formControls['email'].errors) {
+                            @if (formControls['email']['errors']['required']) {
+                            <span class="error">
+                                * Enter your email.
+                            </span>
+                            }
+                            @if (formControls['email']['errors']['pattern']) {
+                            <span class="error">
+                                * Enter email format.
+                            </span>
+                            }
+                            }
+                        </div>
+
+                        <div class="col-2 d-flex flex-column">
+                            <label for="phoneNo">Phone Number <span>*</span></label>
+                            <input pInputText id="phoneNo" aria-describedby="phoneNo-help" formControlName="phoneNo" />
+                            @if(formControls['phoneNo'].touched && formControls['phoneNo'].errors) {
+                            @if (formControls['phoneNo']['errors']['required']) {
+                            <span class="error">
+                                * Enter email Phone Number.
+                            </span>
+                            }
+                            @if (formControls['phoneNo']['errors']['pattern']) {
+                            <span class="error">
+                                * Phone numer is not valid.
+                            </span>
+                            }
+                            }
+                        </div>
+
+                        <div class="col-4 d-flex flex-column">
+                            <label for="summary">Professional Summary <span>*</span></label>
+                            <textarea rows="2" cols="30" pInputTextarea formControlName="summary"></textarea>
+                            @if(formControls['summary'].touched && formControls['summary'].errors) {
+                            @if (formControls['summary']['errors']['required']) {
+                            <span class="error">
+                                * Enter your Summary.
+                            </span>
+                            }
+                            }
+                        </div>
+                    </div>
+
+                    <div class="row mb-2r">
+                        <div class="d-flex flex-row">
+                            <p-checkbox [(ngModel)]="isExperience" [binary]="true" inputId="still"
+                                [ngModelOptions]="{standalone: true}" />
+                            <label class="ml-1r" for="still">Experience</label>
+                        </div>
+                    </div>
+
+                    @if(isExperience) {
+                    <p-panel header="Experience">
+                        <div class="row mb-2r" formArrayName="experience">
+                            <ng-containe class="row" *ngFor="let con of experienceControls; let i = index"
+                                [formGroupName]="i">
+                                <div class="col-2 d-flex flex-column">
+                                    <label>Company Name <span>*</span></label>
+                                    <input pInputText id="companyName" aria-describedby="companyName-help"
+                                        formControlName="companyName" />
+                                    @if(con.get('companyName')?.touched && con.get('companyName')?.errors) {
+                                    @if(con.get('companyName')?.errors?.['required']) {
+                                    <span class="error">
+                                        * Enter your Companyname.
+                                    </span>
+                                    }
+                                    @if(con.get('companyName')?.errors?.['minLength']) {
+                                    <span class="error">
+                                        * Companyname length min 3.
+                                    </span>
+                                    }
+                                    }
+                                </div>
+                                <div class="col-2 d-flex flex-column">
+                                    <label>Role <span>*</span></label>
+                                    <input pInputText aria-describedby="role-help" formControlName="role" />
+                                    @if(con.get('role')?.touched && con.get('role')?.errors) {
+                                    @if(con.get('role')?.errors?.['required']) {
+                                    <span class="error">
+                                        * Enter your Role.
+                                    </span>
+                                    }
+                                    }
+                                </div>
+                                <div class="col-2 d-flex flex-column">
+                                    <label>Location <span>*</span></label>
+                                    <input pInputText aria-describedby="location-help" formControlName="location" />
+                                    @if(con.get('location')?.touched && con.get('location')?.errors) {
+                                    @if(con.get('location')?.errors?.['required']) {
+                                    <span class="error">
+                                        * Enter your location.
+                                    </span>
+                                    }
+                                    @if(con.get('location')?.errors?.['minLength']) {
+                                    <span class="error">
+                                        * location length min 3.
+                                    </span>
+                                    }
+                                    }
+                                </div>
+                                <div class="col-2 d-flex flex-column">
+                                    <label>Join Month <span>*</span></label>
+                                    <p-calendar formControlName="joinMonth" view="month" dateFormat="mm/yy"
+                                        [readonlyInput]="true" />
+                                    @if(con.get('joinMonth')?.touched && con.get('joinMonth')?.errors) {
+                                    @if(con.get('joinMonth')?.errors?.['required']) {
+                                    <span class="error">
+                                        * Select your Join Month.
+                                    </span>
+                                    }
+                                    }
+                                </div>
+                                <div class="col-2 d-flex flex-column">
+                                    <label>End Month <span>*</span></label>
+                                    <p-calendar formControlName="endMonth" view="month" dateFormat="mm/yy"
+                                        [readonlyInput]="true" />
+                                    @if(con.get('endMonth')?.touched && con.get('endMonth')?.errors) {
+                                    @if(con.get('endMonth')?.errors?.['required']) {
+                                    <span class="error">
+                                        * Select your Join Month.
+                                    </span>
+                                    }
+                                    }
+                                </div>
+                                <div class="col-1 d-flex flex-row align-items-center">
+                                    <p-checkbox formControlName="isPresent" [binary]="true"
+                                        (ngModelChange)="selectPresent('experience', i, $event)" />
+                                    <label class="ml-1r">Present</label>
+                                </div>
+                                <div class="col-1 d-flex flex-row align-items-center">
+                                    @if(i +1 == experienceControls.length) {
+                                    <i class="pi pi-plus-circle" style="font-size: 1.5rem;"
+                                        (click)="addExperience()"></i>
+                                    }
+                                    @if(i+ 1 != experienceControls.length) {
+                                    <i class="pi pi-trash" style="font-size: 1.5rem;" (click)="removeExperience(i)"></i>
+                                    }
+                                </div>
+                            </ng-containe>
+                        </div>
+                    </p-panel>
+                    }
+
+                    <div class="row mb-2r">
+                        <div class="d-flex flex-row">
+                            <p-checkbox [(ngModel)]="isEducation" [binary]="true" inputId="still"
+                                [ngModelOptions]="{standalone: true}" />
+                            <label class="ml-1r" for="still">Education</label>
+                        </div>
+                    </div>
+
+                    @if(isEducation) {
+                    <p-panel header="Education">
+                        <div class="row mb-2r" formArrayName="education">
+                            <ng-containe class="row" *ngFor="let con of educationControls; let i = index"
+                                [formGroupName]="i">
+                                <div class="col-2 d-flex flex-column">
+                                    <label>Instiues Name <span>*</span></label>
+                                    <input pInputText id="schoolName" aria-describedby="schoolName-help"
+                                        formControlName="schoolName" />
+                                    @if(con.get('schoolName')?.touched && con.get('schoolName')?.errors) {
+                                    @if(con.get('schoolName')?.errors?.['required']) {
+                                    <span class="error">
+                                        * Enter your schoolName.
+                                    </span>
+                                    }
+                                    @if(con.get('schoolName')?.errors?.['minLength']) {
+                                    <span class="error">
+                                        * schoolName length min 3.
+                                    </span>
+                                    }
+                                    }
+                                </div>
+                                <div class="col-2 d-flex flex-column">
+                                    <label>Qulification <span>*</span></label>
+                                    <input pInputText aria-describedby="qualificaton-help"
+                                        formControlName="qualificaton" />
+                                    @if(con.get('qualificaton')?.touched && con.get('qualificaton')?.errors) {
+                                    @if(con.get('qualificaton')?.errors?.['required']) {
+                                    <span class="error">
+                                        * Enter your qualificaton.
+                                    </span>
+                                    }
+                                    }
+                                </div>
+                                <div class="col-2 d-flex flex-column">
+                                    <label>Location <span>*</span></label>
+                                    <input pInputText aria-describedby="location-help" formControlName="location" />
+                                    @if(con.get('location')?.touched && con.get('location')?.errors) {
+                                    @if(con.get('location')?.errors?.['required']) {
+                                    <span class="error">
+                                        * Enter your location.
+                                    </span>
+                                    }
+                                    @if(con.get('location')?.errors?.['minLength']) {
+                                    <span class="error">
+                                        * location length min 3.
+                                    </span>
+                                    }
+                                    }
+                                </div>
+                                <div class="col-2 d-flex flex-column">
+                                    <label>Join Month <span>*</span></label>
+                                    <p-calendar formControlName="joinMonth" view="month" dateFormat="mm/yy"
+                                        [readonlyInput]="true" />
+                                    @if(con.get('joinMonth')?.touched && con.get('joinMonth')?.errors) {
+                                    @if(con.get('joinMonth')?.errors?.['required']) {
+                                    <span class="error">
+                                        * Select your Join Month.
+                                    </span>
+                                    }
+                                    }
+                                </div>
+                                <div class="col-2 d-flex flex-column">
+                                    <label>End Month <span>*</span></label>
+                                    <p-calendar formControlName="endMonth" view="month" dateFormat="mm/yy"
+                                        [readonlyInput]="true" />
+                                    @if(con.get('endMonth')?.touched && con.get('endMonth')?.errors) {
+                                    @if(con.get('endMonth')?.errors?.['required']) {
+                                    <span class="error">
+                                        * Select your End Month.
+                                    </span>
+                                    }
+                                    }
+                                </div>
+                                <div class="col-1 d-flex flex-row align-items-center">
+                                    <p-checkbox formControlName="isPresent" [binary]="true"
+                                        (ngModelChange)="selectPresent('education', i, $event)" />
+                                    <label class="ml-1r">Present</label>
+                                </div>
+                                <div class="col-1 d-flex flex-row align-items-center">
+                                    @if(i + 1 == experienceControls.length) {
+                                    <i class="pi pi-plus-circle" style="font-size: 1.5rem;"
+                                        (click)="addEducation()"></i>
+                                    }
+                                    @if(i + 1 != experienceControls.length) {
+                                    <i class="pi pi-trash" style="font-size: 1.5rem;" (click)="removeEducation(i)"></i>
+                                    }
+                                </div>
+                            </ng-containe>
+                        </div>
+                    </p-panel>
+                    }
+
+                    <div class="row">
+                        <div class="col-6 d-flex flex-column">
+                            <label for="skil;">Skill <span>*</span></label>
+                            <p-chips id="skill" formControlName="skill" />
+                            @if(formControls['skill'].touched && formControls['skill'].errors) {
+                            @if(formControls['skill']['errors']['required']) {
+                            <span class="error">
+                                * Enter your skill.
+                            </span>
+                            }
+                            }
+                        </div>
+                    </div>
+                </p-scrollPanel>
+            </p-card>
+        </div>
+    </div>
+
+    <div class="flex justify-content-end">
+        <p-button label="Cancel" severity="secondary" (click)="back()" />
+        <p-button class="mx-3" label="Submit" (click)="submit()" />
+    </div>
+</div>
+
+<p-toast />

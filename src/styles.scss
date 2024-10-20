@@ -1,0 +1,45 @@
+/* You can add global styles to this file, and also import other style files */
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+@import "primeicons/primeicons.css";
+@import "bootstrap/dist/css/bootstrap.min.css";
+
+
+.page {
+    height: 100%;
+
+    .header {
+        margin: 0 1rem;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .body {
+        margin: 0 1rem;
+        margin-top: 2rem;
+    }
+
+    input {
+        height: 40px;
+    }
+
+    .ml-1r{
+        margin-left: 1rem;
+    }
+
+}
+
+label {
+    font-size: 12px;
+    font-weight: bold;
+    span {
+        color: red;
+    }
+}
+
+.error {
+    color: red;
+    font-size: 10px;
+}

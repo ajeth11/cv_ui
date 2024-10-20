@@ -1,0 +1,111 @@
+<div class="page">
+
+    <div class="header">
+        <span>
+            <h2>User</h2>
+        </span>
+        <span>
+            <p-button label="Add User" (click)="openModel()" />
+        </span>
+    </div>
+
+    <div class="body">
+
+        <p-table [columns]="header" [value]="getUserList" styleClass="p-datatable-gridlines" scrollHeight="85vh"
+            [tableStyle]="{ 'min-width': '50rem' }">
+            <ng-template pTemplate="header" let-columns>
+                <tr>
+                    @for(col of columns; track col; let i = $index) {
+                    <th>{{col.colum}}</th>
+                    }
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="columns">
+                <tr>
+                    @for(col of columns; track col; let i = $index) {
+                    @if(col.field === 'no') {
+                    <td>{{i + 1}}</td>
+                    }
+                    @if(col.field != 'no' && col.field != 'action') {
+                    <td>{{ rowData[col.field] }}</td>
+                    }
+                    @if(col.field === 'action') {
+                    <td>
+                        <div class="col-1 d-flex flex-row align-items-center">
+                            <i class="pi pi-pencil" style="font-size: 1.5rem;" (click)="openModel('Edit', rowData)"></i>
+                            <i class="pi pi-trash ml-1r" style="font-size: 1.5rem;"
+                                (click)="delete(rowData.userID)"></i>
+                        </div>
+                    </td>
+                    }
+                    }
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+
+
+<p-dialog header="{{mode}} User" [modal]="true" [(visible)]="visible" [style]="{ width: '30rem' }">
+
+    <div [formGroup]="userForm">
+        <div class="d-flex flex-column mb-3">
+            <label for="username">User Name <span>*</span></label>
+            <input pInputText id="username" aria-describedby="username-help" formControlName="userName" />
+            @if(formControls['userName'].touched && formControls['userName'].errors) {
+            @if(formControls['userName']['errors']['required']) {
+            <span class="error">
+                * Enter your User Name.
+            </span>
+            }
+            @if(formControls['userName']['errors']['minlength']) {
+            <span class="error">
+                * User Name length min 3.
+            </span>
+            }
+            }
+        </div>
+
+        <div class="d-flex flex-column mb-3">
+            <label for="email">Email <span>*</span></label>
+            <input pInputText id="email" aria-describedby="email-help" formControlName="email" />
+            @if(formControls['email'].touched && formControls['email'].errors) {
+            @if (formControls['email']['errors']['required']) {
+            <span class="error">
+                * Enter your email.
+            </span>
+            }
+            @if (formControls['email']['errors']['pattern']) {
+            <span class="error">
+                * Enter email format.
+            </span>
+            }
+            }
+        </div>
+
+        <div class="d-flex flex-column mb-3">
+            <label for="password">Password <span>*</span></label>
+            <p-password id="password" formControlName="password" [feedback]="false" [toggleMask]="true" />
+            @if(formControls['password'].touched && formControls['password'].errors) {
+            @if (formControls['password']['errors']['required']) {
+            <span class="error">
+                *Enter your password.
+            </span>
+            }
+            @if(formControls['password']['errors']['minlength']) {
+            <span class="error">
+                * Password length min 8.
+            </span>
+            }
+            }
+        </div>
+
+    </div>
+
+    <div class="d-flex flex-row justify-content-end">
+        <p-button class="me-3" label="Cancel" severity="secondary" (click)="visible = false" />
+        <p-button class="mx-3" [label]=mode (click)="submit()" />
+    </div>
+</p-dialog>
+
+<p-toast />
