@@ -72,8 +72,8 @@ export class CommonService {
     doc.text(`SUMMARY`, startHeadingIndex, 50);
     doc.setFont('helvetica', '');
     doc.setFontSize(10);
-    doc.text(data.summary, startIndex, 60, { maxWidth: 180 });
-    const summaryHeight = this.getTaskLineSize(doc, data.summary, 10, 1.2, 15, 60, 180, '', 100);
+    // doc.text(data.summary, startIndex, 60, { maxWidth: 180 });
+    const summaryHeight = this.getTaskLineSize(doc, data.summary, 10, 0.5, 15, 60, 180, '', 100);
 
     let educationHeight = 0;
     // CV EDUCATION
@@ -126,10 +126,10 @@ export class CommonService {
     doc.setFontSize(14);
     doc.setFont('helvetica', 'bold');
     doc.text('SKILLS', 10, experienceHeight + 20);
-    data.skill.forEach((skil: string) => {
-      doc.setFontSize(12);
-      doc.text(`${skil}`, startIndex, experienceHeight + 30, { maxWidth: 180 });
-    });
+    const skillsLine = data.skill.join(', ');
+    const splitSkill = doc.splitTextToSize(skillsLine, pageWidth);
+    doc.setFontSize(12);
+    doc.text(`${splitSkill}`, 15, experienceHeight+ 30);
 
     if (!isDownload) {
       return doc.output('datauristring');
