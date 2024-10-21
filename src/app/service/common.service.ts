@@ -59,7 +59,7 @@ export class CommonService {
     // CV PERSON DETAILS
     doc.setFontSize(18);
     doc.setFont('helvetica', 'bold');
-    doc.text(`${data.userName}`, pageWidth - startHeadingIndex, 30, { align: 'right' });
+    doc.text(`${data.name}`, pageWidth - startHeadingIndex, 30, { align: 'right' });
     doc.setFont('helvetica', '');
     doc.setFontSize(11);
     doc.text(`${data.email}`, pageWidth - startHeadingIndex, 35, { align: 'right' });
